@@ -5,12 +5,13 @@ import com.example.TaskManagementService.domain.enums.TaskType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class Task  {
+public class Task implements Serializable {
     @Id
     private String id;
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")

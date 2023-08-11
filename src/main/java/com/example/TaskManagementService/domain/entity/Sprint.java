@@ -4,13 +4,14 @@ import com.example.TaskManagementService.domain.enums.SprintStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-public class Sprint {
+public class Sprint implements Serializable {
     @Id
     private String id;
     private String sprintTitle;

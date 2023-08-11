@@ -3,13 +3,13 @@ package com.example.TaskManagementService.domain.enums;
 public enum SprintStatus {
     IN_Progress("sprint in progress"),
     waiting("sprint waiting");
-    private String sprintStatus;
+    private String sprintStatusDescription;
 
-    SprintStatus(String sprintStatus) {
-        this.sprintStatus = sprintStatus;
+    SprintStatus(String sprintStatusDescription) {
+        this.sprintStatusDescription = sprintStatusDescription;
     }
 
-    public String getSprintStatus() {
-        return sprintStatus;
+    public String getSprintStatusDescription() {
+        return sprintStatusDescription;
     }
 }

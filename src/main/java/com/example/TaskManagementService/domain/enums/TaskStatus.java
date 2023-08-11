@@ -6,13 +6,13 @@ public enum TaskStatus {
     UNDER_REVIEW("under review"),
     TEST("test"),
     DONE("done");
-    private String taskStatus;
+    private String taskStatusDescription;
 
-    TaskStatus(String taskStatus) {
-        this.taskStatus = taskStatus;
+    TaskStatus(String taskStatusDescription) {
+        this.taskStatusDescription = taskStatusDescription;
     }
 
-    public String getTaskStatus() {
-        return taskStatus;
+    public String getTaskStatusDescription() {
+        return taskStatusDescription;
     }
 }

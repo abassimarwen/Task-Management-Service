@@ -4,13 +4,12 @@ public enum TaskType {
     FEATURE("new feature"),
     BUGFIX("bugfix"),
     DOCUMENTATION("documentation");
-    private String type;
+    private String typeStatusDescription;
 
-    TaskType(String type) {
-        this.type = type;
+    TaskType(String typeStatusDescription) {
+        this.typeStatusDescription = typeStatusDescription;
     }
-
-    public String getType() {
-        return type;
+    public String getTypeStatusDescription() {
+        return typeStatusDescription;
     }
 }
