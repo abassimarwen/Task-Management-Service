@@ -32,14 +32,15 @@ public class Sprint {
     private Timestamp startDate;
 
     private Float sprintDuration;
-    @Transient
-    private Timestamp endDate;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy="sprint",fetch = FetchType.EAGER)
     private Set<Task> tasks;
 
     public Sprint() {
         this.id =  UUID.randomUUID().toString();
         this.created_at = Timestamp.valueOf(LocalDateTime.now());
+        this.isDeleted = false;
+        this.sprintStatus = SprintStatus.waiting;
     }
 
     public Sprint(String id, String sprintTitle, String sprintDescription, SprintStatus sprintStatus, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, Timestamp startDate, Float sprintDuration, Timestamp endDate, Set<Task> tasks) {
@@ -53,7 +54,6 @@ public class Sprint {
         this.isDeleted = isDeleted;
         this.startDate = startDate;
         this.sprintDuration = sprintDuration;
-        this.endDate = endDate;
         this.tasks = tasks;
     }
 
@@ -135,14 +135,6 @@ public class Sprint {
 
     public void setSprintDuration(Float sprintDuration) {
         this.sprintDuration = sprintDuration;
-    }
-
-    public Timestamp getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
     }
 
     public Set<Task> getTasks() {

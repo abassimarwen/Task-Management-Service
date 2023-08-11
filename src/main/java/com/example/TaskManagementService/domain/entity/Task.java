@@ -37,6 +37,8 @@ public class Task  {
     public Task() {
         this.id =  UUID.randomUUID().toString();
         this.created_at = Timestamp.valueOf(LocalDateTime.now());
+        this.isDeleted = false;
+        this.taskStatus = TaskStatus.TODO;
     }
 
     public Task(String id, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, TaskType taskType, TaskStatus taskStatus, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation) {
