@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -30,8 +31,12 @@ public class Task  {
     private Float taskTime;
     private String taskTitle;
     private Integer taskEstimation;
+    @ManyToOne
+    private Sprint sprint;
 
     public Task() {
+        this.id =  UUID.randomUUID().toString();
+        this.created_at = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Task(String id, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, TaskType taskType, TaskStatus taskStatus, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation) {
@@ -52,8 +57,8 @@ public class Task  {
         return id;
     }
 
-    public void setId() {
-        this.id = UUID.randomUUID().toString();;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Timestamp getCreated_at() {
@@ -134,5 +139,13 @@ public class Task  {
 
     public void setTaskEstimation(Integer taskEstimation) {
         this.taskEstimation = taskEstimation;
+    }
+
+    public Sprint getSprint() {
+        return sprint;
+    }
+
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
     }
 }
