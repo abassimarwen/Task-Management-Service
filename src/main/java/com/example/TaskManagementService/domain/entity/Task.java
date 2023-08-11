@@ -1,0 +1,138 @@
+package com.example.TaskManagementService.domain.entity;
+
+import com.example.TaskManagementService.domain.enums.TaskStatus;
+import com.example.TaskManagementService.domain.enums.TaskType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
+import java.sql.Timestamp;
+import java.util.UUID;
+
+@Entity
+public class Task  {
+    @Id
+    private String id;
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp created_at;
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp modified_at;
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp deleted_at;
+    private Boolean isDeleted;
+    @Enumerated(EnumType.STRING)
+    private TaskType taskType;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus;
+    private String taskDescription;
+    private Float taskTime;
+    private String taskTitle;
+    private Integer taskEstimation;
+
+    public Task() {
+    }
+
+    public Task(String id, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, TaskType taskType, TaskStatus taskStatus, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation) {
+        this.id = id;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+        this.deleted_at = deleted_at;
+        this.isDeleted = isDeleted;
+        this.taskType = taskType;
+        this.taskStatus = taskStatus;
+        this.taskDescription = taskDescription;
+        this.taskTime = taskTime;
+        this.taskTitle = taskTitle;
+        this.taskEstimation = taskEstimation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID().toString();;
+    }
+
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
+    }
+
+    public Timestamp getModified_at() {
+        return modified_at;
+    }
+
+    public void setModified_at(Timestamp modified_at) {
+        this.modified_at = modified_at;
+    }
+
+    public Timestamp getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(Timestamp deleted_at) {
+        this.deleted_at = deleted_at;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public Float getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(Float taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
+
+    public Integer getTaskEstimation() {
+        return taskEstimation;
+    }
+
+    public void setTaskEstimation(Integer taskEstimation) {
+        this.taskEstimation = taskEstimation;
+    }
+}
