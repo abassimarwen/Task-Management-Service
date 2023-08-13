@@ -2,15 +2,31 @@ package com.example.TaskManagementService.domain.mapper;
 
 import com.example.TaskManagementService.domain.dto.TaskDto;
 import com.example.TaskManagementService.domain.entity.Task;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
 @Component
-public interface TaskMapper {
-    TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
-    TaskDto taskEntityToDto(Task task);
-    Task taskDtoToEntity(TaskDto taskDto);
-    Task mapTask(Task task,TaskDto taskDto);
+public class TaskMapper {
+    public TaskDto toDto(Task  task){
+        return new TaskDto(task.getId(),
+                                      task.getTaskType(),
+                                      task.getTaskDescription(),
+                                      task.getTaskTime(),
+                                      task.getTaskTitle(),
+                                      task.getTaskEstimation());
+    }
+    public Task toEntity(TaskDto taskDto){
+         return new Task(taskDto.getTaskType(),
+                 taskDto.getTaskDescription(),
+                 taskDto.getTaskTime(),
+                 taskDto.getTaskTitle(),
+                 taskDto.getTaskEstimation());
+    }
+    public Task toExistingEntity(TaskDto taskDto,Task task){
+        if(taskDto.getTaskEstimation() != null){task.setTaskEstimation(taskDto.getTaskEstimation());}
+        if(taskDto.getTaskTitle() != null){task.setTaskTitle(taskDto.getTaskTitle());}
+        if(taskDto.getTaskTime() != null){task.setTaskTime(taskDto.getTaskTime());}
+        if(taskDto.getTaskDescription() != null){task.setTaskDescription(taskDto.getTaskDescription());}
+        if(taskDto.getTaskType() != null){task.setTaskType(taskDto.getTaskType());}
+        return task;
+    }
 }

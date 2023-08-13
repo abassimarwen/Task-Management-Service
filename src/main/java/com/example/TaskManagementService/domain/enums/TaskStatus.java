@@ -5,7 +5,8 @@ public enum TaskStatus {
     IN_PROGRESS("in progress"),
     UNDER_REVIEW("under review"),
     TEST("test"),
-    DONE("done");
+    DONE("done"),
+    WAITING("waiting to be assigned");
     private String taskStatusDescription;
 
     TaskStatus(String taskStatusDescription) {

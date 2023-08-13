@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,6 +43,7 @@ public class Sprint implements Serializable {
         this.created_at = Timestamp.valueOf(LocalDateTime.now());
         this.isDeleted = false;
         this.sprintStatus = SprintStatus.waiting;
+        this.tasks = new HashSet<>();
     }
 
     public Sprint(String id, String sprintTitle, String sprintDescription, SprintStatus sprintStatus, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, Timestamp startDate, Float sprintDuration, Timestamp endDate, Set<Task> tasks) {
