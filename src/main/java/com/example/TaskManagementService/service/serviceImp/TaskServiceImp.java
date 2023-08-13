@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class TaskServiceImp implements ITaskService {
@@ -41,26 +45,32 @@ public class TaskServiceImp implements ITaskService {
 
     @Override
     public void deleteTask(String taskId) {
-         this.taskRepository.deleteById(taskId);
+       Optional<Task>  task = this.taskRepository.findById(taskId);
+       if(task.isPresent()){
+           task.get().setDeleted(true);
+           this.taskRepository.save(task.get());
+       }
     }
 
     @Override
-    public Task updateTask(TaskDto taskDto, String taskId) {
-        Task taskToUpdate = this.taskRepository.findById(taskId).orElseThrow();
-        Task task = this.taskMapper.taskDtoToEntity(taskDto);
-        return null;
+    public void updateTask(TaskDto taskDto, String taskId) {
+      Optional<Task>  taskToUpdate = this.taskRepository.findById(taskId);
+      if(taskToUpdate.isPresent()){
+          this.taskRepository.save(this.taskMapper.toExistingEntity(taskDto,taskToUpdate.get()));
+      }
     }
 
     @Override
     public Task createTask(TaskDto taskDto) {
-        Task task = this.taskMapper.taskDtoToEntity(taskDto);
-        return this.taskRepository.save(task);
+        return this.taskRepository.save(this.taskMapper.toEntity(taskDto));
     }
 
     @Override
     public Task duplicateTask(String taskId) {
         Task originalTask = this.taskRepository.findById(taskId).orElseThrow();
         Task copiedTask = SerializationUtils.clone(originalTask);
+        copiedTask.setId(UUID.randomUUID().toString());
+        copiedTask.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
         return this.taskRepository.save(copiedTask);
     }
 

@@ -12,7 +12,7 @@ public interface ITaskService {
     Set<Task> getAllUndeletedTasks();
     Task getTask(String taskId);
     void deleteTask(String taskId);
-    Task updateTask(TaskDto taskDto,String taskId);
+    void updateTask(TaskDto taskDto,String taskId);
     Task createTask(TaskDto taskDto);
     Task duplicateTask(String taskId);
     Task updateTaskStatus(TaskStatus status , String TaskId);

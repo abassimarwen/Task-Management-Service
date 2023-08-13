@@ -3,11 +3,32 @@ import com.example.TaskManagementService.domain.enums.TaskType;
 
 
 public class TaskDto {
+    private String id;
     private TaskType taskType;
     private String taskDescription;
     private Float taskTime;
     private String taskTitle;
     private Integer taskEstimation;
+
+    public TaskDto() {
+    }
+
+    public TaskDto(String id, TaskType taskType, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation) {
+        this.id = id;
+        this.taskType = taskType;
+        this.taskDescription = taskDescription;
+        this.taskTime = taskTime;
+        this.taskTitle = taskTitle;
+        this.taskEstimation = taskEstimation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public TaskType getTaskType() {
         return taskType;
