@@ -6,7 +6,6 @@ import com.example.TaskManagementService.domain.entity.Task;
 import com.example.TaskManagementService.domain.enums.TaskStatus;
 import com.example.TaskManagementService.service.IService.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,15 +40,15 @@ public class TaskRestController {
         this.taskService.deleteTask(taskId);
     }
     @GetMapping()
-    public List<Task> getAllTasks(){
+    public List<TaskDto> getAllTasks(){
        return this.taskService.getAllTasks();
     }
     @GetMapping("/undeleted")
-    public Set<Task> getAllUndeletedTasks(){
+    public Set<TaskDto> getAllUndeletedTasks(){
         return this.taskService.getAllUndeletedTasks();
     }
     @GetMapping("/{taskId}")
-    public Task getTask(@PathVariable("taskId")String taskId){
+    public TaskDto getTask(@PathVariable("taskId")String taskId){
         return this.taskService.getTask(taskId);
     }
 }

@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class TaskServiceImp implements ITaskService {
@@ -29,18 +26,28 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return this.taskRepository.findAll();
+    public List<TaskDto> getAllTasks() {
+      List<Task> tasks = this.taskRepository.findAll();
+      List<TaskDto> tasksDto = new ArrayList<>();
+      tasks.forEach(task -> {
+          tasksDto.add(this.taskMapper.toDto(task));
+      });
+      return tasksDto;
     }
 
     @Override
-    public Set<Task> getAllUndeletedTasks() {
-        return this.taskRepository.getAllUndeletedTasks();
+    public Set<TaskDto> getAllUndeletedTasks() {
+        Set<Task> tasks = this.taskRepository.getAllUndeletedTasks();
+        Set<TaskDto> tasksDto = new HashSet<>();
+        tasks.forEach(task -> {
+            tasksDto.add(this.taskMapper.toDto(task));
+        });
+        return tasksDto;
     }
 
     @Override
-    public Task getTask(String taskId) {
-        return this.taskRepository.findById(taskId).orElseThrow();
+    public TaskDto getTask(String taskId) {
+        return this.taskMapper.toDto(this.taskRepository.findById(taskId).orElseThrow());
     }
 
     @Override
