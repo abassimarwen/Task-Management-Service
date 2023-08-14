@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -49,6 +50,7 @@ public class SprintServiceImp implements ISprintService {
        Optional<Sprint> sprintToDelete = this.sprintRepository.findById(sprintId);
        if(sprintToDelete.isPresent()){
            sprintToDelete.get().setDeleted(true);
+           sprintToDelete.get().setDeleted_at(Timestamp.valueOf(LocalDateTime.now()));
            this.sprintRepository.save(sprintToDelete.get());
        }
     }
@@ -57,6 +59,7 @@ public class SprintServiceImp implements ISprintService {
     public void updateSprint(String sprintId, SprintDto sprintDto) {
         Optional<Sprint> sprintToUpdate = this.sprintRepository.findById(sprintId);
         if(sprintToUpdate.isPresent()){
+            sprintToUpdate.get().setModified_at(Timestamp.valueOf(LocalDateTime.now()));
         this.sprintRepository.save(this.sprintMapper.toExistingEntity(sprintDto,sprintToUpdate.get()));
         }
     }
@@ -91,6 +94,7 @@ public class SprintServiceImp implements ISprintService {
     public void updateSprintStatus(SprintStatus sprintStatus, String sprintId) {
         Optional<Sprint> sprint = this.sprintRepository.findById(sprintId);
         if(sprint.isPresent()){
+            sprint.get().setModified_at(Timestamp.valueOf(LocalDateTime.now()));
             sprint.get().setSprintStatus(sprintStatus);
             this.sprintRepository.save(sprint.get());
         }
