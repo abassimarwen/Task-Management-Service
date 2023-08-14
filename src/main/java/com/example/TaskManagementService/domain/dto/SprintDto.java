@@ -11,17 +11,18 @@ public class SprintDto {
     private String sprintDescription;
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
     private Timestamp startDate;
-    private Float sprintDuration;
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    private Timestamp endDate;
 
     public SprintDto() {
     }
 
-    public SprintDto(String id, String sprintTitle, String sprintDescription, Timestamp startDate, Float sprintDuration) {
+    public SprintDto(String id, String sprintTitle, String sprintDescription, Timestamp startDate, Timestamp endDate) {
         this.id = id;
         this.sprintTitle = sprintTitle;
         this.sprintDescription = sprintDescription;
         this.startDate = startDate;
-        this.sprintDuration = sprintDuration;
+        this.endDate = endDate;
     }
 
     public String getId() {
@@ -56,11 +57,11 @@ public class SprintDto {
         this.startDate = startDate;
     }
 
-    public Float getSprintDuration() {
-        return sprintDuration;
+    public Timestamp getEndDate() {
+        return endDate;
     }
 
-    public void setSprintDuration(Float sprintDuration) {
-        this.sprintDuration = sprintDuration;
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
     }
 }

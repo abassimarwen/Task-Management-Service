@@ -33,7 +33,9 @@ public class Sprint implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp startDate;
 
-    private Float sprintDuration;
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp endDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="sprint",fetch = FetchType.EAGER)
     private Set<Task> tasks;
@@ -46,18 +48,18 @@ public class Sprint implements Serializable {
         this.tasks = new HashSet<>();
     }
 
-    public Sprint(String id, String sprintTitle, String sprintDescription, SprintStatus sprintStatus, Timestamp created_at, Timestamp modified_at, Timestamp deleted_at, Boolean isDeleted, Timestamp startDate, Float sprintDuration, Timestamp endDate, Set<Task> tasks) {
-        this.id = id;
+    public Sprint( String sprintTitle, String sprintDescription , Timestamp startDate, Timestamp endDate) {
+        this.id =  UUID.randomUUID().toString();
+        this.created_at = Timestamp.valueOf(LocalDateTime.now());
+        this.isDeleted = false;
+        this.sprintStatus = SprintStatus.waiting;
+        this.tasks = new HashSet<>();
+
         this.sprintTitle = sprintTitle;
         this.sprintDescription = sprintDescription;
-        this.sprintStatus = sprintStatus;
-        this.created_at = created_at;
-        this.modified_at = modified_at;
-        this.deleted_at = deleted_at;
-        this.isDeleted = isDeleted;
         this.startDate = startDate;
-        this.sprintDuration = sprintDuration;
-        this.tasks = tasks;
+        this.endDate = endDate;
+
     }
 
     public String getId() {
@@ -132,14 +134,13 @@ public class Sprint implements Serializable {
         this.startDate = startDate;
     }
 
-    public Float getSprintDuration() {
-        return sprintDuration;
+    public Timestamp getEndDate() {
+        return endDate;
     }
 
-    public void setSprintDuration(Float sprintDuration) {
-        this.sprintDuration = sprintDuration;
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
     }
-
     public Set<Task> getTasks() {
         return tasks;
     }

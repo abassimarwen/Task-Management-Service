@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface ITaskService {
-    List<Task> getAllTasks();
-    Set<Task> getAllUndeletedTasks();
-    Task getTask(String taskId);
+    List<TaskDto> getAllTasks();
+    Set<TaskDto> getAllUndeletedTasks();
+    TaskDto getTask(String taskId);
     void deleteTask(String taskId);
     void updateTask(TaskDto taskDto,String taskId);
     Task createTask(TaskDto taskDto);
