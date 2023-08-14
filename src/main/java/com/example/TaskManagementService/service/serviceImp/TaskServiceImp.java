@@ -55,6 +55,7 @@ public class TaskServiceImp implements ITaskService {
        Optional<Task>  task = this.taskRepository.findById(taskId);
        if(task.isPresent()){
            task.get().setDeleted(true);
+           task.get().setDeleted_at(Timestamp.valueOf(LocalDateTime.now()));
            this.taskRepository.save(task.get());
        }
     }
@@ -63,6 +64,7 @@ public class TaskServiceImp implements ITaskService {
     public void updateTask(TaskDto taskDto, String taskId) {
       Optional<Task>  taskToUpdate = this.taskRepository.findById(taskId);
       if(taskToUpdate.isPresent()){
+          taskToUpdate.get().setModified_at(Timestamp.valueOf(LocalDateTime.now()));
           this.taskRepository.save(this.taskMapper.toExistingEntity(taskDto,taskToUpdate.get()));
       }
     }
@@ -85,6 +87,7 @@ public class TaskServiceImp implements ITaskService {
     public Task updateTaskStatus(TaskStatus status, String TaskId) {
         Task task = this.taskRepository.findById(TaskId).orElseThrow();
         task.setTaskStatus(status);
+        task.setModified_at(Timestamp.valueOf(LocalDateTime.now()));
         return this.taskRepository.save(task);
     }
 }
