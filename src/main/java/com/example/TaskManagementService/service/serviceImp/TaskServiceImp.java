@@ -4,6 +4,7 @@ import com.example.TaskManagementService.domain.dto.TaskDto;
 import com.example.TaskManagementService.domain.entity.Task;
 import com.example.TaskManagementService.domain.enums.TaskStatus;
 import com.example.TaskManagementService.domain.mapper.TaskMapper;
+import com.example.TaskManagementService.error_handling.EntityNotFoundException;
 import com.example.TaskManagementService.repository.TaskRepository;
 import com.example.TaskManagementService.service.IService.ITaskService;
 import org.apache.commons.lang3.SerializationUtils;
@@ -47,47 +48,77 @@ public class TaskServiceImp implements ITaskService {
 
     @Override
     public TaskDto getTask(String taskId) {
-        return this.taskMapper.toDto(this.taskRepository.findById(taskId).orElseThrow());
+        Optional<Task> task = this.taskRepository.findById(taskId);
+        if(task.isPresent()){
+            return this.taskMapper.toDto(task.get());
+        }
+        else{
+            throw new EntityNotFoundException("Task Not Found");
+        }
     }
 
     @Override
-    public void deleteTask(String taskId) {
+    public TaskDto deleteTask(String taskId) {
        Optional<Task>  task = this.taskRepository.findById(taskId);
        if(task.isPresent()){
            task.get().setDeleted(true);
            task.get().setDeleted_at(Timestamp.valueOf(LocalDateTime.now()));
            this.taskRepository.save(task.get());
+           return this.taskMapper.toDto(task.get());
+       }else{
+           throw new EntityNotFoundException("Task Not Found");
        }
     }
 
     @Override
-    public void updateTask(TaskDto taskDto, String taskId) {
+    public TaskDto updateTask(TaskDto taskDto, String taskId) {
       Optional<Task>  taskToUpdate = this.taskRepository.findById(taskId);
       if(taskToUpdate.isPresent()){
           taskToUpdate.get().setModified_at(Timestamp.valueOf(LocalDateTime.now()));
           this.taskRepository.save(this.taskMapper.toExistingEntity(taskDto,taskToUpdate.get()));
+          return this.taskMapper.toDto(taskToUpdate.get());
+      }else {
+          throw new EntityNotFoundException("Task Not Found");
       }
     }
 
     @Override
-    public Task createTask(TaskDto taskDto) {
-        return this.taskRepository.save(this.taskMapper.toEntity(taskDto));
+    public TaskDto createTask(TaskDto taskDto) {
+
+              Task task =this.taskMapper.toEntity(taskDto);
+        this.taskRepository.save(task);
+                return taskDto;
     }
 
     @Override
-    public Task duplicateTask(String taskId) {
-        Task originalTask = this.taskRepository.findById(taskId).orElseThrow();
-        Task copiedTask = SerializationUtils.clone(originalTask);
+    public TaskDto duplicateTask(String taskId) {
+       Optional<Task>  originalTask = this.taskRepository.findById(taskId);
+       if(originalTask.isPresent()){
+        Task copiedTask = SerializationUtils.clone(originalTask.get());
         copiedTask.setId(UUID.randomUUID().toString());
         copiedTask.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
-        return this.taskRepository.save(copiedTask);
+        return this.taskMapper.toDto(this.taskRepository.save(copiedTask));}
+       else {
+           throw  new EntityNotFoundException("Task Not Found");
+       }
     }
 
     @Override
-    public Task updateTaskStatus(TaskStatus status, String TaskId) {
-        Task task = this.taskRepository.findById(TaskId).orElseThrow();
-        task.setTaskStatus(status);
-        task.setModified_at(Timestamp.valueOf(LocalDateTime.now()));
-        return this.taskRepository.save(task);
+    public TaskDto updateTaskStatus(TaskStatus status,
+                                    String TaskId)
+    {
+      Optional<Task>   taskToUpdate = this.taskRepository.findById(TaskId);
+      if (taskToUpdate.isPresent())
+      {
+        taskToUpdate.get().setTaskStatus(status);
+        taskToUpdate.get().setModified_at(Timestamp.valueOf(LocalDateTime.now()));
+        return this.taskMapper.toDto(
+                this.taskRepository.save(taskToUpdate.get())
+        );
+      }
+      else
+      {
+          throw new EntityNotFoundException("Task Not Found");
+      }
     }
 }

@@ -11,9 +11,9 @@ public interface ITaskService {
     List<TaskDto> getAllTasks();
     Set<TaskDto> getAllUndeletedTasks();
     TaskDto getTask(String taskId);
-    void deleteTask(String taskId);
-    void updateTask(TaskDto taskDto,String taskId);
-    Task createTask(TaskDto taskDto);
-    Task duplicateTask(String taskId);
-    Task updateTaskStatus(TaskStatus status , String TaskId);
+    TaskDto deleteTask(String taskId);
+    TaskDto updateTask(TaskDto taskDto,String taskId);
+    TaskDto createTask(TaskDto taskDto);
+    TaskDto duplicateTask(String taskId);
+    TaskDto updateTaskStatus(TaskStatus status , String TaskId);
 }
