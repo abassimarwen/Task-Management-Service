@@ -8,12 +8,12 @@ import com.example.TaskManagementService.domain.enums.SprintStatus;
 import java.util.Set;
 
 public interface ISprintService {
-    public Sprint createSprint(SprintDto sprintDto);
-    public void fillSprint(TaskDto taskDto, String sprintId);
-    public void deleteSprint(String sprintId);
-    public void updateSprint(String sprintId,SprintDto sprintDto);
+    public SprintDto createSprint(SprintDto sprintDto);
+    public SprintDto fillSprint(String taskId, String sprintId);
+    public SprintDto deleteSprint(String sprintId);
+    public SprintDto updateSprint(String sprintId,SprintDto sprintDto);
     public SprintDto getSprint(String sprintId);
     public Set<SprintDto> getSprints();
     public Set<SprintDto> getUndeletedSprints();
-    public void updateSprintStatus(SprintStatus sprintStatus,String sprintId);
+    public SprintDto updateSprintStatus(SprintStatus sprintStatus,String sprintId);
 }

@@ -1,8 +1,8 @@
 package com.example.TaskManagementService.domain.enums;
 
 public enum SprintStatus {
-    IN_Progress("sprint in progress"),
-    waiting("sprint waiting");
+    IN_PROGRESS("sprint in progress"),
+    WAITING("sprint waiting");
     private String sprintStatusDescription;
 
     SprintStatus(String sprintStatusDescription) {

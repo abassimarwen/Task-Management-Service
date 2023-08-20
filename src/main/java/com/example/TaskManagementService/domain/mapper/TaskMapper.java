@@ -15,11 +15,13 @@ public class TaskMapper {
                                       task.getTaskEstimation());
     }
     public Task toEntity(TaskDto taskDto){
-         return new Task(taskDto.getTaskType(),
+         return new Task(
+                 taskDto.getTaskType(),
                  taskDto.getTaskDescription(),
                  taskDto.getTaskTime(),
                  taskDto.getTaskTitle(),
-                 taskDto.getTaskEstimation());
+                 taskDto.getTaskEstimation()
+         );
     }
     public Task toExistingEntity(TaskDto taskDto,Task task){
         if(taskDto.getTaskEstimation() != null){task.setTaskEstimation(taskDto.getTaskEstimation());}
