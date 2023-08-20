@@ -5,6 +5,7 @@ import com.example.TaskManagementService.domain.enums.TaskType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -12,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 public class Task implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     private String id;
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
@@ -32,7 +35,7 @@ public class Task implements Serializable {
     private Float taskTime;
     private String taskTitle;
     private Integer taskEstimation;
-    @ManyToOne
+    @ManyToOne()
     private Sprint sprint;
 
     public Task() {

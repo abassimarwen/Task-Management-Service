@@ -16,4 +16,6 @@ public interface ITaskService {
     TaskDto createTask(TaskDto taskDto);
     TaskDto duplicateTask(String taskId);
     TaskDto updateTaskStatus(TaskStatus status , String TaskId);
+    Set<TaskDto> getSprintTasks(String SprintId);
+    TaskDto affectTaskToSprint(String taskId,String sprintId);
 }
