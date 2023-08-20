@@ -4,6 +4,7 @@ import com.example.TaskManagementService.domain.enums.SprintStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ import java.util.UUID;
 
 @Entity
 public class Sprint implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String sprintTitle;
@@ -44,7 +47,7 @@ public class Sprint implements Serializable {
         this.id =  UUID.randomUUID().toString();
         this.created_at = Timestamp.valueOf(LocalDateTime.now());
         this.isDeleted = false;
-        this.sprintStatus = SprintStatus.waiting;
+        this.sprintStatus = SprintStatus.WAITING;
         this.tasks = new HashSet<>();
     }
 
@@ -52,7 +55,7 @@ public class Sprint implements Serializable {
         this.id =  UUID.randomUUID().toString();
         this.created_at = Timestamp.valueOf(LocalDateTime.now());
         this.isDeleted = false;
-        this.sprintStatus = SprintStatus.waiting;
+        this.sprintStatus = SprintStatus.WAITING;
         this.tasks = new HashSet<>();
 
         this.sprintTitle = sprintTitle;

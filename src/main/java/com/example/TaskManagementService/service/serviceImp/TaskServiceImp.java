@@ -1,10 +1,12 @@
 package com.example.TaskManagementService.service.serviceImp;
 
 import com.example.TaskManagementService.domain.dto.TaskDto;
+import com.example.TaskManagementService.domain.entity.Sprint;
 import com.example.TaskManagementService.domain.entity.Task;
 import com.example.TaskManagementService.domain.enums.TaskStatus;
 import com.example.TaskManagementService.domain.mapper.TaskMapper;
 import com.example.TaskManagementService.error_handling.EntityNotFoundException;
+import com.example.TaskManagementService.repository.SprintRepository;
 import com.example.TaskManagementService.repository.TaskRepository;
 import com.example.TaskManagementService.service.IService.ITaskService;
 import org.apache.commons.lang3.SerializationUtils;
@@ -16,14 +18,18 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
 @Service
 public class TaskServiceImp implements ITaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private  final SprintRepository sprintRepository;
     @Autowired
-    public TaskServiceImp(TaskRepository taskRepository, TaskMapper taskMapper) {
+    public TaskServiceImp(TaskRepository taskRepository, TaskMapper taskMapper, SprintRepository sprintRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.sprintRepository = sprintRepository;
+
     }
 
     @Override
@@ -120,5 +126,32 @@ public class TaskServiceImp implements ITaskService {
       {
           throw new EntityNotFoundException("Task Not Found");
       }
+    }
+
+    @Override
+    public Set<TaskDto> getSprintTasks(String SprintId) {
+        Set<TaskDto> taskPerSprint = new HashSet<>();
+        this.taskRepository.getAllUndeletedTasks().forEach(task -> {
+           if(task.getSprint() != null)
+           {
+
+           if(task.getSprint().getId().equals(SprintId))
+           {
+             taskPerSprint.add(this.taskMapper.toDto(task));
+                 }
+           }
+        });
+
+
+        return taskPerSprint;
+    }
+
+    @Override
+    public TaskDto affectTaskToSprint(String taskId, String sprintId) {
+        Task taskToAffect = this.taskRepository.findById(taskId).orElseThrow(()->new EntityNotFoundException("task not found"));
+        Sprint sprintToFill = this.sprintRepository.findById(sprintId).orElseThrow(()->new EntityNotFoundException("Sprint Not Found"));
+        taskToAffect.setSprint(sprintToFill);
+        taskRepository.save(taskToAffect);
+        return this.taskMapper.toDto(taskToAffect);
     }
 }

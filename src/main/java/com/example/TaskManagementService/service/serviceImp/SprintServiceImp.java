@@ -1,7 +1,6 @@
 package com.example.TaskManagementService.service.serviceImp;
 
 import com.example.TaskManagementService.domain.dto.SprintDto;
-import com.example.TaskManagementService.domain.dto.TaskDto;
 import com.example.TaskManagementService.domain.entity.Sprint;
 import com.example.TaskManagementService.domain.entity.Task;
 import com.example.TaskManagementService.domain.enums.SprintStatus;
@@ -10,8 +9,8 @@ import com.example.TaskManagementService.domain.mapper.TaskMapper;
 import com.example.TaskManagementService.error_handling.EntityNotFoundException;
 import com.example.TaskManagementService.error_handling.ValidationException;
 import com.example.TaskManagementService.repository.SprintRepository;
+import com.example.TaskManagementService.repository.TaskRepository;
 import com.example.TaskManagementService.service.IService.ISprintService;
-import com.example.TaskManagementService.service.IService.ITaskService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +25,13 @@ public class SprintServiceImp implements ISprintService {
     private final SprintRepository sprintRepository;
     private final SprintMapper sprintMapper;
     private final TaskMapper taskMapper;
-    private final ITaskService taskService;
+    private final TaskRepository taskRepository;
     @Autowired
-    public SprintServiceImp(SprintRepository sprintRepository, SprintMapper sprintMapper,TaskMapper taskMapper,ITaskService taskService) {
+    public SprintServiceImp(SprintRepository sprintRepository, SprintMapper sprintMapper,TaskMapper taskMapper,TaskRepository taskRepository) {
         this.sprintRepository = sprintRepository;
         this.sprintMapper = sprintMapper;
         this.taskMapper = taskMapper;
-        this.taskService = taskService;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -45,12 +44,14 @@ public class SprintServiceImp implements ISprintService {
     @Transactional
     public SprintDto fillSprint(String taskId, String sprintId) {
         Optional<Sprint> sprintToFill = this.sprintRepository.findById(sprintId);
-        TaskDto   taskToAffect = this.taskService.getTask(taskId);
+        Task   taskToAffect = this.taskRepository.findById(taskId).orElseThrow(()->new EntityNotFoundException("task not found"));
         if(sprintToFill.isPresent()){
             Float sprintDuration = this.getSprintDurationPerHours(sprintToFill.get());
             if(sprintDuration > 0.0 & sprintDuration > taskToAffect.getTaskTime()){
-                sprintToFill.get().getTasks().add(this.taskMapper.toEntity(taskToAffect));
+                sprintToFill.get().getTasks().add(taskToAffect);
+                 taskToAffect.setSprint(sprintToFill.get());
                 this.sprintRepository.save(sprintToFill.get());
+                this.taskRepository.save(taskToAffect);
                 return this.sprintMapper.toDto(sprintToFill.get());
             }else {
                 throw new ValidationException("task time not valid");
@@ -103,7 +104,9 @@ public class SprintServiceImp implements ISprintService {
         Set<SprintDto> sprintsDto = new HashSet<>();
         this.sprintRepository.findAll()
                 .forEach(sprint ->
-                {sprintsDto
+                {
+
+                    sprintsDto
                         .add(this.sprintMapper
                                 .toDto(sprint));
                 });

@@ -56,4 +56,13 @@ public class TaskRestController {
     public ResponseEntity<TaskDto> getTask(@PathVariable("taskId")String taskId){
         return new ResponseEntity<>(this.taskService.getTask(taskId), HttpStatus.OK);
     }
+    @GetMapping("/tasks-per-sprints/{sprintId}")
+    public ResponseEntity<Set<TaskDto>> getTasksPerSprint(@PathVariable("sprintId")String sprintId){
+        return new ResponseEntity<>(this.taskService.getSprintTasks(sprintId),HttpStatus.OK);
+    }
+    @PutMapping("/affect-task/{taskId}/{sprintId}")
+    public ResponseEntity<TaskDto> affectTaskToSprint(@PathVariable("taskId") String taskId,
+                                                      @PathVariable("sprintId")String sprintId){
+        return  new ResponseEntity<>(this.taskService.affectTaskToSprint(taskId,sprintId),HttpStatus.OK);
+    }
 }
