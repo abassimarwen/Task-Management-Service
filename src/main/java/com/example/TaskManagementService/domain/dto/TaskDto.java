@@ -1,4 +1,5 @@
 package com.example.TaskManagementService.domain.dto;
+import com.example.TaskManagementService.domain.enums.TaskStatus;
 import com.example.TaskManagementService.domain.enums.TaskType;
 
 
@@ -9,17 +10,27 @@ public class TaskDto {
     private Float taskTime;
     private String taskTitle;
     private Integer taskEstimation;
+    private TaskStatus taskStatus;
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
     public TaskDto() {
     }
 
-    public TaskDto(String id, TaskType taskType, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation) {
+    public TaskDto(String id, TaskType taskType, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation,TaskStatus taskStatus) {
         this.id = id;
         this.taskType = taskType;
         this.taskDescription = taskDescription;
         this.taskTime = taskTime;
         this.taskTitle = taskTitle;
         this.taskEstimation = taskEstimation;
+        this.taskStatus = taskStatus;
     }
 
     public String getId() {

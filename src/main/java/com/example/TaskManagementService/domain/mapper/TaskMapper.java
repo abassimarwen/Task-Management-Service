@@ -12,7 +12,8 @@ public class TaskMapper {
                                       task.getTaskDescription(),
                                       task.getTaskTime(),
                                       task.getTaskTitle(),
-                                      task.getTaskEstimation());
+                                      task.getTaskEstimation(),
+                                      task.getTaskStatus());
     }
     public Task toEntity(TaskDto taskDto){
          return new Task(
