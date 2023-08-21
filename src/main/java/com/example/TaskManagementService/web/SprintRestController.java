@@ -14,6 +14,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/sprints")
+@CrossOrigin("*")
 public class SprintRestController {
     private final ISprintService sprintService;
     @Autowired

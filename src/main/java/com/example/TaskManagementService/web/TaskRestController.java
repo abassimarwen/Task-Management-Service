@@ -15,6 +15,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/tasks")
+@CrossOrigin("*")
 public class TaskRestController {
     private final ITaskService taskService;
     @Autowired
