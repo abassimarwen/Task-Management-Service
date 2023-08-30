@@ -102,6 +102,7 @@ public class TaskServiceImp implements ITaskService {
        if(originalTask.isPresent()){
         Task copiedTask = SerializationUtils.clone(originalTask.get());
         copiedTask.setId(UUID.randomUUID().toString());
+        copiedTask.setSprint(null);
         copiedTask.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
         return this.taskMapper.toDto(this.taskRepository.save(copiedTask));}
        else {

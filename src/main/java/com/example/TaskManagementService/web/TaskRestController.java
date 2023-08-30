@@ -2,7 +2,6 @@ package com.example.TaskManagementService.web;
 
 
 import com.example.TaskManagementService.domain.dto.TaskDto;
-import com.example.TaskManagementService.domain.entity.Task;
 import com.example.TaskManagementService.domain.enums.TaskStatus;
 import com.example.TaskManagementService.service.IService.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,9 +9,9 @@ public class SprintDto {
     private String id;
     private String sprintTitle;
     private String sprintDescription;
-    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Timestamp startDate;
-    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Timestamp endDate;
 
     public SprintDto() {
