@@ -151,6 +151,7 @@ public class TaskServiceImp implements ITaskService {
     public TaskDto affectTaskToSprint(String taskId, String sprintId) {
         Task taskToAffect = this.taskRepository.findById(taskId).orElseThrow(()->new EntityNotFoundException("task not found"));
         Sprint sprintToFill = this.sprintRepository.findById(sprintId).orElseThrow(()->new EntityNotFoundException("Sprint Not Found"));
+        taskToAffect.setTaskStatus(TaskStatus.TODO);
         taskToAffect.setSprint(sprintToFill);
         taskRepository.save(taskToAffect);
         return this.taskMapper.toDto(taskToAffect);
