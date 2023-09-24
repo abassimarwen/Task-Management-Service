@@ -21,7 +21,8 @@ public class TaskMapper {
                  taskDto.getTaskDescription(),
                  taskDto.getTaskTime(),
                  taskDto.getTaskTitle(),
-                 taskDto.getTaskEstimation()
+                 taskDto.getTaskEstimation(),
+                 taskDto.getTaskStatus()
          );
     }
     public Task toExistingEntity(TaskDto taskDto,Task task){
@@ -30,6 +31,7 @@ public class TaskMapper {
         if(taskDto.getTaskTime() != null){task.setTaskTime(taskDto.getTaskTime());}
         if(taskDto.getTaskDescription() != null){task.setTaskDescription(taskDto.getTaskDescription());}
         if(taskDto.getTaskType() != null){task.setTaskType(taskDto.getTaskType());}
+        if(taskDto.getTaskStatus() != null){task.setTaskStatus(taskDto.getTaskStatus());}
         return task;
     }
 }

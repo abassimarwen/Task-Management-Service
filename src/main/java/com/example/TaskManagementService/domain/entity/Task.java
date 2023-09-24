@@ -56,6 +56,17 @@ public class Task implements Serializable {
         this.taskTitle = taskTitle;
         this.taskEstimation = taskEstimation;
     }
+    public Task(TaskType taskType, String taskDescription, Float taskTime, String taskTitle, Integer taskEstimation,TaskStatus taskStatus) {
+        this.id =  UUID.randomUUID().toString();
+        this.created_at = Timestamp.valueOf(LocalDateTime.now());
+        this.isDeleted = false;
+        this.taskStatus = taskStatus;
+        this.taskType = taskType;
+        this.taskDescription = taskDescription;
+        this.taskTime = taskTime;
+        this.taskTitle = taskTitle;
+        this.taskEstimation = taskEstimation;
+    }
 
     public String getId() {
         return id;
